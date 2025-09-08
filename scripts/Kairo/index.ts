@@ -1,7 +1,7 @@
 import { system } from "@minecraft/server";
 import { AddonPropertyManager, type AddonProperty } from "./addons/AddonPropertyManager";
 import { AddonInitializer } from "./addons/router/init/AddonInitializer";
-import { AddonManager, type AddonData } from "./addons/AddonManager";
+import { AddonManager } from "./addons/AddonManager";
 import { SCRIPT_EVENT_IDS } from "../constants/scriptevent";
 
 type ActivateHandler = () => void | Promise<void>;
