@@ -1,7 +1,6 @@
 import { system } from "@minecraft/server";
 import { AddonInitializeReceive } from "./AddonInitializeReceive";
 import { AddonInitializeResponse } from "./AddonInitializeResponse";
-import { AddonRecord } from "../../record/AddonRecord";
 import type { Kairo } from "../../..";
 import type { AddonProperty } from "../../AddonPropertyManager";
 
@@ -10,12 +9,10 @@ export class AddonInitializer {
 
     private readonly receive: AddonInitializeReceive;
     private readonly response: AddonInitializeResponse;
-    private readonly record: AddonRecord;
 
     private constructor(private readonly kairo: Kairo) {
         this.receive = AddonInitializeReceive.create(this);
         this.response = AddonInitializeResponse.create(this);
-        this.record = AddonRecord.create(this);
     }
 
     public static create(kairo: Kairo): AddonInitializer {

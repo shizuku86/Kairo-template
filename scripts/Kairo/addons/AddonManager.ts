@@ -1,8 +1,6 @@
 import type { Kairo } from "..";
 import type { AddonProperty } from "./AddonPropertyManager";
-import type { AddonRecords } from "./record/AddonRecord";
 import { ScriptEventCommandMessageAfterEvent, system, type Player } from "@minecraft/server";
-import { AddonList } from "./ui/AddonList";
 import { AddonReceiver } from "./router/AddonReceiver";
 
 export type RegistrationState = "registered" | "unregistered" | "missing_requiredAddons";
@@ -35,27 +33,12 @@ export interface AddonData {
 
 export class AddonManager {
     private readonly receiver: AddonReceiver;
-    private readonly addonList: AddonList;
-    private readonly addonsData: Map<string, AddonData> = new Map();
 
     private constructor(private readonly kairo: Kairo) {
         this.receiver = AddonReceiver.create(this);
-        this.addonList = AddonList.create(this);
     }
     public static create(kairo: Kairo): AddonManager {
         return new AddonManager(kairo);
-    }
-
-    public getAddonsData(): Map<string, AddonData> {
-        return this.addonsData;
-    }
-
-    public getAddonRecords(): AddonRecords {
-        return this.kairo.getAddonRecords();
-    }
-
-    public showAddonList(player: Player): void {
-        this.addonList.showAddonList(player);
     }
 
     public getSelfAddonProperty(): AddonProperty {
@@ -76,9 +59,5 @@ export class AddonManager {
 
     public _scriptEvent(message: string): void {
         this.kairo._scriptEvent(message);
-    }
-
-    public handleAddonListScriptEvent = (ev: ScriptEventCommandMessageAfterEvent): void => {
-        this.addonList.handleScriptEvent(ev);
     }
 }

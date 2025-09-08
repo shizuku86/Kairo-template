@@ -1,8 +1,7 @@
-import { Player, ScriptEventCommandMessageAfterEvent, system } from "@minecraft/server";
+import { system } from "@minecraft/server";
 import { AddonPropertyManager, type AddonProperty } from "./addons/AddonPropertyManager";
 import { AddonInitializer } from "./addons/router/init/AddonInitializer";
 import { AddonManager, type AddonData } from "./addons/AddonManager";
-import type { AddonRecords } from "./addons/record/AddonRecord";
 import { SCRIPT_EVENT_IDS } from "../constants/scriptevent";
 
 type ActivateHandler = () => void | Promise<void>;
@@ -49,20 +48,12 @@ export class Kairo {
         inst.addonInitializer.subscribeClientHooks();
     }
 
-    public static initRouter(): void {
-        this.getInstance().addonInitializer.subscribeCoreHooks();
-    }
-
     public getSelfAddonProperty(): AddonProperty {
         return this.addonPropertyManager.getSelfAddonProperty();
     }
 
     public refreshSessionId(): void {
         this.addonPropertyManager.refreshSessionId();
-    }
-
-    public static awaitRegistration(): Promise<void> {
-        return this.getInstance().addonInitializer.awaitRegistration();
     }
 
     public subscribeReceiverHooks(): void {
@@ -72,43 +63,6 @@ export class Kairo {
     public static unsubscribeInitializeHooks(): void {
         this.getInstance().addonInitializer.unsubscribeClientHooks();
         system.sendScriptEvent(SCRIPT_EVENT_IDS.UNSUBSCRIBE_INITIALIZE, "");
-    }
-
-    public static initSaveAddons(): void {
-        this.getInstance().addonInitializer.saveAddons();
-    }
-
-    public static initActivateAddons(): void {
-        const inst = this.getInstance();
-        inst.addonInitializer.initActivateAddons(inst.addonInitializer.getRegisteredAddons());
-    }
-
-    public getAddonsData(): Map<string, AddonData> {
-        return this.addonManager.getAddonsData();
-    }
-
-    public getAddonRecords(): AddonRecords {
-        return this.addonInitializer.getAddonRecords();
-    }
-
-    public static showAddonList(player: Player): void {
-        this.getInstance().addonManager.showAddonList(player);
-    }
-
-    public sendActiveRequest(sessionId: string): void {
-        this.addonManager.sendActiveRequest(sessionId);
-    }
-
-    public sendDeactiveRequest(sessionId: string): void {
-        this.addonManager.sendDeactiveRequest(sessionId);
-    }
-
-    public static handleAddonRouterScriptEvent(ev: ScriptEventCommandMessageAfterEvent): void {
-        Kairo.getInstance().addonManager.handleAddonRouterScriptEvent(ev);
-    }
-
-    public static handleAddonListScriptEvent(ev: ScriptEventCommandMessageAfterEvent): void {
-        Kairo.getInstance().addonManager.handleAddonListScriptEvent(ev);
     }
 
     public static set onActivate(val: Assignable<ActivateHandler>) {
