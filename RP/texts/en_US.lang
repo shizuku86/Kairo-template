@@ -1,0 +1,43 @@
+kairo.name=Kairo
+kairo.description=Enables communication between multiple behavior packs by leveraging the ScriptAPI as a communication layer.
+
+kairo.addon.active=%1 ver.%2 has been activated
+kairo.addon.deactive=%1 has been deactivated
+kairo.addon.changeVersion=The version of %1 has been changed to %2
+
+kairo.addonList.title=Addon List
+kairo.addonList.active=§l§9Active§r
+kairo.addonList.inactive=§l§4Inactive§r
+
+kairo.addonSetting.latestVersion=Latest Version
+kairo.addonSetting.active=§9(§oactive§r§9)§r
+kairo.addonSetting.selected=§7(§oselected§r§7)§r
+kairo.addonSetting.uninstalled=§7(§ouninstalled§r§7)§r
+kairo.addonSetting.missing.required=§7(§orequired addons missing§r§7)§r
+kairo.addonSetting.registeredAddonList=§lRegistered Version Records§r
+kairo.addonSetting.required=§lRequired Addons§r
+kairo.addonSetting.nonerequired=§7§oNo addons required§r
+kairo.addonSetting.selectVersion=Select Version
+kairo.addonSetting.activate=Disable / Enable
+kairo.addonSetting.submit=Confirm changes
+
+kairo.tags.official=Official
+kairo.tags.approved=Approved
+kairo.tags.stable=Stable
+kairo.tags.experimental=Experimental
+
+kairo.addonSetting.required.title=Confirm Changes
+kairo.addonSetting.required.activation.body=The following required addons must be activated. Do you want to activate them with the latest version?\n%s
+kairo.addonSetting.required.deactivation.body=The following required addons must be deactivated. Do you want to deactivate them?\n%s
+kairo.addonSetting.required.active.confirm=Activate
+kairo.addonSetting.required.deactive.confirm=Deactivate
+kairo.addonSetting.required.cancel=Cancel
+
+kairo.errorForm.title=An error has occurred
+kairo.errorForm.header=Error Details
+kairo.errorForm.footer=§7If the issue cannot be resolved, please report the error code [ %s ] to the developer.§r
+
+kairo.error.not.found.message=An unexpected issue has occurred.
+kairo.error.not.found.hint=Please contact the Kairo developer.
+kairo.error.resolve.for.activation.message=An unexpected issue occurred while activating a required addon.
+kairo.error.resolve.for.activation.hint=Please check that all required addons are installed correctly.
