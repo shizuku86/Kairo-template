@@ -9,32 +9,37 @@ export type SemVer = {
     build?: string | undefined;      // "abc123" (commit)
 };
 
+/**
+ * 文末に # が記述されている箇所を適宜修正して使用します。  
+ * Modify and use where # is written at the end of the sentence as appropriate
+ */
+
 export const properties = {
-    id: "kairo", // a-z & 0-9 - _
+    id: "kairo-template", # // a-z & 0-9 - _
     metadata: { 
         /** 製作者の名前 */
         authors: [
-            "shizuku86"
+            //"shizuku86"
         ]
     },
     header: {
-        name: "Kairo",
-        description: "Enables communication between multiple behavior packs by leveraging the ScriptAPI as a communication layer.",
+        name: "Kairo-template", #
+        description: "A starter template for developing Minecraft Bedrock addons that rely on Kairo.", #
         version: { 
             major: 1, 
             minor: 0, 
             patch: 0,
-            prerelease: "dev.36",
+            // prerelease: "preview.1",
             // build: "abc123",
         },
         min_engine_version: [ 1,21,100 ],
-        uuid: "45826daa-bf9f-4443-b746-944a0970bfef"
+        uuid: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" #
     },
     resourcepack: {
         name: "Use BP Name",
         description: "Use BP Description",
-        uuid: "5586bc68-ca19-4d34-9b8d-0cf522ff421d",
-        module_uuid: "f9cf1b9e-5d91-477a-b9d8-b1cc6f64c335",
+        uuid: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX", #
+        module_uuid: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX", #
     },
     modules: [
         {
@@ -42,17 +47,17 @@ export const properties = {
 			language: "javascript",
 			entry: "scripts/index.js",
             version: "header.version",
-            uuid: "1d3bfdf2-7456-435b-bacf-c94c0d7b7c64"
+            uuid: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" #
         }
     ],
     dependencies: [
 		{
 			module_name: "@minecraft/server",
-			version: "2.1.0"
+			version: "2.1.0" #
 		},
 		{
 			module_name: "@minecraft/server-ui",
-			version: "2.0.0"
+			version: "2.0.0" #
 		}
 	],
     /** 前提アドオン */
@@ -62,11 +67,17 @@ export const properties = {
          */
     },
     tags: [
-        "official",
-        "stable",
+        // "stable",
     ],
 }
 
+/**
+ * "official" を非公式に付与することは許可されていません。
+ * 公認のアドオンには "approved" を付与します。
+ * It is not allowed to assign "official" unofficially.
+ * For approved addons, assign "approved".
+ * 
+ */
 export const supportedTags: string[] = [
     "official",
     "approved",

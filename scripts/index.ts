@@ -1,23 +1,7 @@
-import { system } from "@minecraft/server";
 import { Kairo } from "./Kairo/index";
 
 async function main(): Promise<void> {
-    /**
-     * DynamicPropertyをすべてクリアするメソッド (開発用)
-     * アンコメントで使用してください
-     * A method to clear all DynamicProperties (for development use)
-     * Use by uncommenting
-     */
-    // DynamicPropertyStorage.clear();
-
     Kairo.init(); // client
-    Kairo.initRouter();
-
-    await Kairo.awaitRegistration();
-    Kairo.unsubscribeInitializeHooks();
-
-    Kairo.initSaveAddons();
-    Kairo.initActivateAddons();
 }
 
 Kairo.onActivate = () => {
@@ -25,8 +9,6 @@ Kairo.onActivate = () => {
      * ここにアドオン有効化時の初期化処理を書く
      * Write the initialization logic executed when the addon becomes active
      */
-    system.afterEvents.scriptEventReceive.subscribe(Kairo.handleAddonRouterScriptEvent);
-    system.afterEvents.scriptEventReceive.subscribe(Kairo.handleAddonListScriptEvent);
 };
 
 Kairo.onDeactivate = () => {
@@ -36,8 +18,6 @@ Kairo.onDeactivate = () => {
      * Write the shutdown/cleanup logic executed when the addon becomes deactive
      * In principle, undo/disable what was done during initialization
      */
-    system.afterEvents.scriptEventReceive.unsubscribe(Kairo.handleAddonRouterScriptEvent);
-    system.afterEvents.scriptEventReceive.unsubscribe(Kairo.handleAddonListScriptEvent);
 };
 
 Kairo.onScriptEvent = () => {

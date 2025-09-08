@@ -1,13 +1,9 @@
 import type { Kairo } from "..";
 import type { AddonProperty } from "./AddonPropertyManager";
-import { AddonActivator } from "./router/AddonActivator";
 import type { AddonRecords } from "./record/AddonRecord";
 import { ScriptEventCommandMessageAfterEvent, system, type Player } from "@minecraft/server";
 import { AddonList } from "./ui/AddonList";
 import { AddonReceiver } from "./router/AddonReceiver";
-import { VersionManager } from "../../utils/VersionManager";
-import { AddonVersionChanger } from "./router/AddonVersionChanger";
-import { AddonRouter } from "./router/AddonRouter";
 
 export type RegistrationState = "registered" | "unregistered" | "missing_requiredAddons";
 
@@ -38,18 +34,12 @@ export interface AddonData {
 }
 
 export class AddonManager {
-    private readonly activator: AddonActivator;
-    private readonly versionChanger: AddonVersionChanger;
     private readonly receiver: AddonReceiver;
-    private readonly addonRouter: AddonRouter;
     private readonly addonList: AddonList;
     private readonly addonsData: Map<string, AddonData> = new Map();
 
     private constructor(private readonly kairo: Kairo) {
-        this.activator = AddonActivator.create(this);
-        this.versionChanger = AddonVersionChanger.create(this);
         this.receiver = AddonReceiver.create(this);
-        this.addonRouter = AddonRouter.create(this);
         this.addonList = AddonList.create(this);
     }
     public static create(kairo: Kairo): AddonManager {
@@ -88,58 +78,7 @@ export class AddonManager {
         this.kairo._scriptEvent(message);
     }
 
-    public handleAddonRouterScriptEvent = (ev: ScriptEventCommandMessageAfterEvent): void => {
-        this.addonRouter.handleScriptEvent(ev);
-    }
-
     public handleAddonListScriptEvent = (ev: ScriptEventCommandMessageAfterEvent): void => {
         this.addonList.handleScriptEvent(ev);
-    }
-
-    public getLatestPreferStableVersion(id: string): string | undefined {
-        const addonData = this.getAddonsData().get(id);
-        if (!addonData) return undefined;
-
-        const sorted = Object.keys(addonData.versions)
-            .filter(v => addonData.versions[v]?.isRegistered)
-            .sort((a, b) => VersionManager.compare(b, a));
-
-        if (sorted.length === 0) {
-            return undefined;
-        }
-
-        const stable = sorted.find(v => !VersionManager.fromString(v).prerelease);
-        return stable ?? sorted[0]!;
-    }
-
-    public getLatestVersion(id: string): string | undefined {
-        const addonData = this.getAddonsData().get(id);
-        if (!addonData) return undefined;
-
-        const latestVersion = Object.keys(addonData.versions)
-            .filter(v => addonData.versions[v]?.isRegistered)
-            .sort((a, b) => VersionManager.compare(b, a))[0];
-
-        return latestVersion ?? undefined;
-    }
-
-    public sendActiveRequest(sessionId: string): void {
-        this.activator.sendActiveRequest(sessionId);
-    }
-
-    public sendDeactiveRequest(sessionId: string): void {
-        this.activator.sendDeactiveRequest(sessionId);
-    }
-
-    public activateAddon(player: Player, addonData: AddonData, version: string): void {
-        this.activator.activateAddon(player, addonData, version);
-    }
-
-    public deactivateAddon(player: Player, addonData: AddonData): void {
-        this.activator.deactivateAddon(player, addonData);
-    }
-
-    public changeAddonVersion(player: Player, addonData: AddonData, version: string): void {
-        this.versionChanger.changeAddonVersion(player, addonData, version);
     }
 }
