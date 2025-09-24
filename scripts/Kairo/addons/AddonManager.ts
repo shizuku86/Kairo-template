@@ -1,6 +1,6 @@
 import type { Kairo } from "..";
 import type { AddonProperty } from "./AddonPropertyManager";
-import { ScriptEventCommandMessageAfterEvent, system, type Player } from "@minecraft/server";
+import { system } from "@minecraft/server";
 import { AddonReceiver } from "./router/AddonReceiver";
 
 export type RegistrationState = "registered" | "unregistered" | "missing_requiredAddons";
