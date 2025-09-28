@@ -2,6 +2,7 @@ import type { Kairo } from "..";
 import type { AddonProperty } from "./AddonPropertyManager";
 import { system } from "@minecraft/server";
 import { AddonReceiver } from "./router/AddonReceiver";
+import { DataVaultReceiver } from "./router/DataVaultReceiver";
 
 export type RegistrationState = "registered" | "unregistered" | "missing_requiredAddons";
 
@@ -33,9 +34,11 @@ export interface AddonData {
 
 export class AddonManager {
     private readonly receiver: AddonReceiver;
+    private readonly dataVaultReceiver: DataVaultReceiver;
 
     private constructor(private readonly kairo: Kairo) {
         this.receiver = AddonReceiver.create(this);
+        this.dataVaultReceiver = DataVaultReceiver.create(this);
     }
     public static create(kairo: Kairo): AddonManager {
         return new AddonManager(kairo);
@@ -59,5 +62,13 @@ export class AddonManager {
 
     public _scriptEvent(message: string): void {
         this.kairo._scriptEvent(message);
+    }
+
+    public dataVaultHandleOnScriptEvent(message: string): void {
+        this.dataVaultReceiver.handleOnScriptEvent(message);
+    }
+
+    public getDataVaultLastDataLoaded(): { data: string; count: number } {
+        return this.dataVaultReceiver.getLastDataLoaded();
     }
 }

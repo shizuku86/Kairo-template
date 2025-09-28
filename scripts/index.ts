@@ -29,4 +29,10 @@ Kairo.onScriptEvent = (message: string) => {
      */
 };
 
+/**
+ * Kairo-DataVault を利用しない場合は、以下の処理は削除しても良い
+ * If you do not use Kairo-DataVault, you may remove the following processing
+ */
+Kairo.addScriptEvent(Kairo.dataVaultHandleOnScriptEvent);
+
 main();
